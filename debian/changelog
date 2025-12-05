@@ -1,3 +1,10 @@
+openmediavault-navidrome (0.1.1) stable; urgency=medium
+
+  * Switch service form to shared-folder selectors and resolve refs on RPC.
+  * Add config/migration fields for shared-folder refs plus README guidance.
+
+ -- Buzz Maintainer <buzz@example.com>  Fri, 05 Dec 2025 22:30:00 +0000
+
 openmediavault-navidrome (0.1.0) stable; urgency=medium
 
   * Initial release.
