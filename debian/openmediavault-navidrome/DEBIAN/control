@@ -2,7 +2,7 @@ Package: openmediavault-navidrome
 Version: 0.1.0
 Architecture: all
 Maintainer: Buzz Maintainer <buzz@example.com>
-Installed-Size: 58
+Installed-Size: 62
 Depends: openmediavault (>= 7.0), adduser, curl, ca-certificates, python3
 Section: admin
 Priority: optional

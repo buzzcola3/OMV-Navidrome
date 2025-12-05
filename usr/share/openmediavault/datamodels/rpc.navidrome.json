@@ -22,7 +22,13 @@
         "music_directory": {
           "type": "string"
         },
+        "music_sharedfolderref": {
+          "type": "string"
+        },
         "data_directory": {
+          "type": "string"
+        },
+        "data_sharedfolderref": {
           "type": "string"
         },
         "log_level": {

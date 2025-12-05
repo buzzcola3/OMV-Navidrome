@@ -24,16 +24,16 @@ data:
         label: Port
         min: 1
         max: 65535
-      - type: textInput
-        name: music_directory
-        label: Music library path
-        placeholder: /srv/dev-disk-by-label-media/music
-        hint: Required when enabling Navidrome.
-      - type: textInput
-        name: data_directory
-        label: Data directory
-        placeholder: /var/lib/navidrome
-        hint: Required when enabling Navidrome.
+      - type: sharedFolderSelect
+        name: music_sharedfolderref
+        label: Music library folder
+        hint: Select the shared folder that contains your music. Required when enabling Navidrome.
+        hasCreateButton: true
+      - type: sharedFolderSelect
+        name: data_sharedfolderref
+        label: Data folder
+        hint: Select where Navidrome stores its data. Required when enabling Navidrome.
+        hasCreateButton: true
       - type: select
         name: log_level
         label: Log level

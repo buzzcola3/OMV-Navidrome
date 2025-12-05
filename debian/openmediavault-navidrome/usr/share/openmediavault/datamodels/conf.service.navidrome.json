@@ -25,7 +25,15 @@
       "type": "string",
       "default": ""
     },
+    "music_sharedfolderref": {
+      "type": "string",
+      "default": ""
+    },
     "data_directory": {
+      "type": "string",
+      "default": ""
+    },
+    "data_sharedfolderref": {
       "type": "string",
       "default": ""
     },

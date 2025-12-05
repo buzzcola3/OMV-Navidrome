@@ -19,7 +19,7 @@ class Navidrome extends ServiceAbstract
         $this->registerMethod("set");
     }
 
-    public function get(array $params, array $context = [])
+    public function get(?array $params = null, array $context = [])
     {
         $this->validateMethodContext($context, [
             "role" => OMV_ROLE_ADMINISTRATOR,
@@ -37,6 +37,7 @@ class Navidrome extends ServiceAbstract
             "role" => OMV_ROLE_ADMINISTRATOR,
         ]);
         $params = $this->normalizeParams($params);
+        $params = $this->applySharedFolderSelections($params);
         $this->validateMethodParams($params, "rpc.navidrome.set");
         $this->assertPathsWhenEnabled($params);
 
@@ -62,6 +63,32 @@ class Navidrome extends ServiceAbstract
         return $params;
     }
 
+    private function applySharedFolderSelections(array $params): array
+    {
+        foreach (["music", "data"] as $prefix) {
+            $sharedFolderKey = sprintf("%s_sharedfolderref", $prefix);
+            $directoryKey = sprintf("%s_directory", $prefix);
+
+            $sharedFolderRef = trim((string) ($params[$sharedFolderKey] ?? ""));
+            if ("" === $sharedFolderRef) {
+                continue;
+            }
+
+            $params[$directoryKey] = $this->resolveSharedFolderPath($sharedFolderRef);
+        }
+
+        return $params;
+    }
+
+    private function resolveSharedFolderPath(string $uuid): string
+    {
+        $database = Database::getInstance();
+        $sharedFolder = $database->get("conf.system.sharedfolder", $uuid);
+        $mountPoint = $database->get("conf.system.filesystem.mountpoint", $sharedFolder->get("mntentref"));
+
+        return build_path(DIRECTORY_SEPARATOR, $mountPoint->get("dir"), $sharedFolder->get("reldirpath"));
+    }
+
     private function assertPathsWhenEnabled(array $params): void
     {
         if (empty($params["enable"])) {
@@ -69,8 +96,8 @@ class Navidrome extends ServiceAbstract
         }
 
         foreach ([
-            "music_directory" => "Music directory",
-            "data_directory" => "Data directory",
+            "music_directory" => "Music folder",
+            "data_directory" => "Data folder",
         ] as $field => $label) {
             $value = (string) ($params[$field] ?? "");
             if ("" === trim($value)) {

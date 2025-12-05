@@ -20,7 +20,7 @@ sudo dpkg -i ../openmediavault-navidrome_<version>_all.deb
 Setup creates the `navidrome` user, fetches the binary, seeds `conf.service.navidrome`, and renders `/etc/navidrome/navidrome.toml` with safe defaults. After installation, run `sudo omv-salt deploy run webgui` once so Workbench picks up the new Navidrome manifests.
 
 ## Configuration & Usage
-You can manage settings from the OMV Workbench UI (Services → Navidrome). Until that UI is available, the CLI offers the same workflow:
+You can manage settings from the OMV Workbench UI (Services → Navidrome). The form now uses OMV shared folders for both the music library and the Navidrome data directory, so make sure those shared folders exist under Storage → Shared Folders before opening the service page. Until that UI is available, the CLI offers the same workflow:
 
 ```bash
 # Inspect current settings
@@ -38,6 +38,12 @@ omv-rpc -u admin -p openmediavault navidrome set '{
 	"navidrome_version":"latest"
 }'
 
+# ...or target specific shared folders by UUID
+omv-rpc -u admin -p openmediavault navidrome set '{
+	"music_sharedfolderref":"d4c5a458-...",
+	"data_sharedfolderref":"f13b2e3d-..."
+}'
+
 **Legacy note:** the older `{"config":{...}}` payload still works for backward compatibility.
 
 # Verify service
@@ -46,8 +52,8 @@ curl -I http://<omv-host>:4533/
 ```
 
 - Tips:
-- Point `music_directory` at a real shared folder so the first scan succeeds.
-- Both `music_directory` and `data_directory` start blank—set them before toggling Enable on.
+- In the UI pick existing shared folders for both the music library and the Navidrome data set; the CLI can still set `music_directory`/`data_directory` directly if you prefer raw paths.
+- Both directory fields start blank—set them (or their shared folder counterparts) before toggling Enable on.
 - Set `navidrome_version` to something like `0.58.5` if you need to pin; `latest` tracks upstream.
 - Export `NAVIDROME_ARCH=<arch>` before running `/usr/lib/navidrome/fetch-navidrome.sh` when cross-testing.
 

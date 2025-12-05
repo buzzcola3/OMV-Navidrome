@@ -10,7 +10,7 @@ DATA_DIR="/var/lib/navidrome"
 LOG_DIR="/var/log/navidrome"
 DEFAULT_VERSION="0.58.5"
 
-DEFAULT_CONFIG='{"enable":false,"listen_address":"0.0.0.0","port":4533,"music_directory":"","data_directory":"","log_level":"info","auto_update":true,"navidrome_version":"latest"}'
+DEFAULT_CONFIG='{"enable":false,"listen_address":"0.0.0.0","port":4533,"music_directory":"","music_sharedfolderref":"","data_directory":"","data_sharedfolderref":"","log_level":"info","auto_update":true,"navidrome_version":"latest"}'
 
 set +e
 CONFIG_JSON="$(omv-confdbadm read conf.service.navidrome 2>/dev/null)"
