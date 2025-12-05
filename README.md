@@ -55,7 +55,7 @@ curl -I http://<omv-host>:4533/
 1. Bump `debian/changelog` and tag the repo as needed.
 2. Run `make build` followed by `make lint` (or `lintian ../openmediavault-navidrome_<ver>_all.deb`) to catch packaging regressions.
 3. Install the `all.deb` on a clean OMV test node, exercise enable/disable flows, and run `omv-rpc navidrome get/set` smoke tests.
-4. Copy the `.deb`, `.buildinfo`, and `.changes` artifacts for release; sign them if you distribute via APT.
+4. Push a tag like `git tag v0.1.0 && git push origin v0.1.0`; the GitHub Actions workflow builds the package and attaches the `.deb`, `.changes`, and `.buildinfo` files to the release automatically (check `.github/workflows/release.yml`).
 
 ## Dev loop
 1. Update `debian/changelog` and tag versions as usual.

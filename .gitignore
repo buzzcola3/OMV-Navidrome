@@ -1,0 +1,21 @@
+# Build artifacts
+*.deb
+*.buildinfo
+*.changes
+
+# Debian packaging outputs
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/openmediavault-navidrome/
+debian/tmp/
+debian/*.log
+debian/*.substvars
+
+# Logs and local clutter
+*.log
+
+# Editor/OS metadata
+.vscode/
+.idea/
+.DS_Store
