@@ -1,0 +1,10 @@
+version: "1.0"
+type: route
+data:
+  url: services/navidrome
+  title: Navidrome
+  breadcrumb:
+    text: Navidrome
+  editing: true
+  notificationTitle: Updated Navidrome settings.
+  component: service.navidrome

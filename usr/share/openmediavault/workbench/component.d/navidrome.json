@@ -1,0 +1,56 @@
+{
+  "type": "form",
+  "id": "service.navidrome",
+  "title": "Navidrome",
+  "description": "Manage the Navidrome music server",
+  "rpc": {
+    "set": "rpc.navidrome.set",
+    "get": "rpc.navidrome.get"
+  },
+  "fields": [{
+    "type": "checkbox",
+    "name": "enable",
+    "label": "Enable service"
+  }, {
+    "type": "textInput",
+    "name": "listen_address",
+    "label": "Listen address"
+  }, {
+    "type": "numberInput",
+    "name": "port",
+    "label": "Port",
+    "min": 1,
+    "max": 65535
+  }, {
+    "type": "textInput",
+    "name": "music_directory",
+    "label": "Music library path"
+  }, {
+    "type": "textInput",
+    "name": "data_directory",
+    "label": "Data directory"
+  }, {
+    "type": "select",
+    "name": "log_level",
+    "label": "Log level",
+    "store": {
+      "path": "loglevel",
+      "data": [
+        ["info", "Info"],
+        ["debug", "Debug"],
+        ["warn", "Warn"],
+        ["error", "Error"]
+      ]
+    }
+  }, {
+    "type": "checkbox",
+    "name": "auto_update",
+    "label": "Auto-update Navidrome"
+  }, {
+    "type": "textInput",
+    "name": "navidrome_version",
+    "label": "Navidrome version",
+    "placeholder": "latest",
+    "hint": "Use 'latest' or an explicit version string like 0.52.5"
+  }]
+}

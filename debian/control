@@ -1,0 +1,15 @@
+Source: openmediavault-navidrome
+Section: admin
+Priority: optional
+Maintainer: Buzz Maintainer <buzz@example.com>
+Build-Depends: debhelper-compat (= 13), openmediavault (>= 7.0), po-debconf
+Standards-Version: 4.6.2
+Homepage: https://navidrome.org/
+Rules-Requires-Root: no
+
+Package: openmediavault-navidrome
+Architecture: all
+Depends: ${misc:Depends}, openmediavault (>= 7.0), adduser, curl, ca-certificates, python3
+Description: OpenMediaVault plugin for Navidrome
+ Provides integration between OpenMediaVault and the Navidrome music server,
+ exposing service management and configuration through the OMV web interface.

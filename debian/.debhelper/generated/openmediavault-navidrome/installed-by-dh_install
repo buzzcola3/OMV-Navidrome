@@ -1,0 +1,4 @@
+./lib/systemd/system/navidrome.service
+./usr/lib/navidrome
+./usr/share/openmediavault
+./usr/share/doc/openmediavault-navidrome

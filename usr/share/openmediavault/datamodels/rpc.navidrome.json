@@ -1,0 +1,61 @@
+[
+  {
+    "type": "rpc",
+    "id": "rpc.navidrome.set",
+    "params": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "required": true
+        },
+        "listen_address": {
+          "type": "string",
+          "required": true
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "required": true
+        },
+        "music_directory": {
+          "type": "string"
+        },
+        "data_directory": {
+          "type": "string"
+        },
+        "log_level": {
+          "type": "string",
+          "enum": [
+            "info",
+            "debug",
+            "warn",
+            "error"
+          ],
+          "required": true
+        },
+        "auto_update": {
+          "type": "boolean",
+          "required": true
+        },
+        "navidrome_version": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }
+  },
+  {
+    "type": "rpc",
+    "id": "rpc.navidrome.get",
+    "params": {
+      "type": "object",
+      "properties": {}
+    },
+    "responses": {
+      "type": "object",
+      "$ref": "conf.service.navidrome"
+    }
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "path": "service.navidrome",
+  "text": "Navidrome",
+  "icon": "mdi:music",
+  "position": 90,
+  "view": "service.navidrome",
+  "role": "admin"
+}

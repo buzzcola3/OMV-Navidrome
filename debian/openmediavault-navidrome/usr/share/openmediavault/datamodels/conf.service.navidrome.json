@@ -1,0 +1,51 @@
+{
+  "type": "config",
+  "id": "conf.service.navidrome",
+  "title": "Navidrome service",
+  "queryinfo": {
+    "xpath": "//services/navidrome",
+    "iterable": false
+  },
+  "properties": {
+    "enable": {
+      "type": "boolean",
+      "default": false
+    },
+    "listen_address": {
+      "type": "string",
+      "default": "0.0.0.0"
+    },
+    "port": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 65535,
+      "default": 4533
+    },
+    "music_directory": {
+      "type": "string",
+      "default": ""
+    },
+    "data_directory": {
+      "type": "string",
+      "default": ""
+    },
+    "log_level": {
+      "type": "string",
+      "enum": [
+        "info",
+        "debug",
+        "warn",
+        "error"
+      ],
+      "default": "info"
+    },
+    "auto_update": {
+      "type": "boolean",
+      "default": true
+    },
+    "navidrome_version": {
+      "type": "string",
+      "default": "latest"
+    }
+  }
+}

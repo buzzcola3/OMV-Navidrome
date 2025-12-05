@@ -1,0 +1,16 @@
+1814d2ae0cf573c22d7b46b6fbd87a0c  lib/systemd/system/navidrome.service
+d41d8cd98f00b204e9800998ecf8427e  usr/lib/navidrome/.gitkeep
+08c936efa28fffb88aae38af1046085e  usr/lib/navidrome/fetch-navidrome.sh
+0f2d8d9d03d2887d5e9d9f07681556a2  usr/share/doc/openmediavault-navidrome/changelog.gz
+c44e0b35df4c54aca3f2cb820baf171a  usr/share/doc/openmediavault-navidrome/copyright
+a296f94ecbd8b961aef402d84a5e9c67  usr/share/openmediavault/confdb/create.d/conf.service.navidrome
+e57ea771f0d6f4b8188126bd22f3acf3  usr/share/openmediavault/datamodels/conf.service.navidrome.json
+9d7d213b2922f0964543a640644331b1  usr/share/openmediavault/datamodels/rpc.navidrome.json
+eff159df65f0b0706098ce73c93bbfd6  usr/share/openmediavault/engined/module/navidrome.inc
+e2e69e9cc4936f12b825f91dcf5ad3a4  usr/share/openmediavault/engined/rpc/navidrome.inc
+0c03c253ffdee82d9acde01cc7d545d2  usr/share/openmediavault/mkconf/navidrome
+ddd6594ea7775081d250f31bfad3d70e  usr/share/openmediavault/workbench/component.d/navidrome.json
+6dc3695503cd0b55b43af310e9d667b6  usr/share/openmediavault/workbench/component.d/navidrome.yaml
+807de721bbd13424032e8a640b05ec66  usr/share/openmediavault/workbench/navigation.d/navidrome.json
+98a4a571518c3e578e850b919988a869  usr/share/openmediavault/workbench/navigation.d/navidrome.yaml
+26173e5bea258613fcb5805dce903bde  usr/share/openmediavault/workbench/route.d/navidrome.yaml

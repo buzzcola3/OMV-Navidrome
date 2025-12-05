@@ -1,0 +1,98 @@
+#!/bin/sh
+set -e
+
+. /usr/share/openmediavault/scripts/helper-functions
+
+SERVICE="navidrome"
+CONFIG_DIR="/etc/navidrome"
+CONFIG_FILE="$CONFIG_DIR/navidrome.toml"
+DATA_DIR="/var/lib/navidrome"
+LOG_DIR="/var/log/navidrome"
+DEFAULT_VERSION="0.58.5"
+
+DEFAULT_CONFIG='{"enable":false,"listen_address":"0.0.0.0","port":4533,"music_directory":"","data_directory":"","log_level":"info","auto_update":true,"navidrome_version":"latest"}'
+
+set +e
+CONFIG_JSON="$(omv-confdbadm read conf.service.navidrome 2>/dev/null)"
+status=$?
+set -e
+if [ $status -ne 0 ]; then
+	CONFIG_JSON="$DEFAULT_CONFIG"
+fi
+[ -z "$CONFIG_JSON" ] && CONFIG_JSON="$DEFAULT_CONFIG"
+
+json_value() {
+	key="$1"
+	printf '%s' "$CONFIG_JSON" |
+		python3 -c 'import json, sys; data = json.load(sys.stdin); key = sys.argv[1]; value = data.get(key);
+if isinstance(value, bool):
+	print("true" if value else "false")
+elif value is None:
+	print("")
+else:
+	print(value)' "$key"
+}
+
+bool_to_toml() {
+	case "$1" in
+		true|True|1)
+			echo "true"
+			;;
+		*)
+			echo "false"
+			;;
+	esac
+}
+
+listen_address=$(json_value listen_address)
+port=$(json_value port)
+music_directory=$(json_value music_directory)
+data_directory=$(json_value data_directory)
+log_level=$(json_value log_level)
+auto_update=$(json_value auto_update)
+navidrome_version=$(json_value navidrome_version)
+
+if [ -z "$music_directory" ] || [ -z "$data_directory" ]; then
+	exit 0
+fi
+
+[ -z "$navidrome_version" ] && navidrome_version="$DEFAULT_VERSION"
+[ "$navidrome_version" = "latest" ] && navidrome_version="$DEFAULT_VERSION"
+
+installed_version=""
+[ -f /usr/lib/navidrome/.version ] && installed_version="$(cat /usr/lib/navidrome/.version 2>/dev/null || true)"
+
+if [ ! -x /usr/lib/navidrome/navidrome ] || [ "$installed_version" != "$navidrome_version" ]; then
+	NAVIDROME_VERSION="$navidrome_version" /usr/lib/navidrome/fetch-navidrome.sh
+fi
+
+install -d -m 0755 "$CONFIG_DIR"
+install -d -o navidrome -g navidrome -m 0755 "$DATA_DIR"
+install -d -o navidrome -g navidrome -m 0755 "$LOG_DIR"
+install -d -o navidrome -g navidrome -m 0755 "$data_directory"
+install -d -o navidrome -g navidrome -m 0755 "$data_directory/transcoding"
+touch "$LOG_DIR/navidrome.log"
+chown navidrome:navidrome "$LOG_DIR/navidrome.log"
+
+cat >"$CONFIG_FILE" <<EOF
+[Server]
+Address = "${listen_address}"
+Port = ${port}
+MusicFolder = "${music_directory}"
+DataFolder = "${data_directory}"
+LogLevel = "${log_level}"
+EnableCoverArtCache = true
+AutoUpdate = $(bool_to_toml "$auto_update")
+
+[Log]
+File = "/var/log/navidrome/navidrome.log"
+
+[Transcoding]
+Enabled = true
+TmpFolder = "${data_directory}/transcoding"
+FFmpegPath = "/usr/bin/ffmpeg"
+MaxSessions = 4
+EOF
+
+chown navidrome:navidrome "$CONFIG_FILE"
+chmod 0640 "$CONFIG_FILE"

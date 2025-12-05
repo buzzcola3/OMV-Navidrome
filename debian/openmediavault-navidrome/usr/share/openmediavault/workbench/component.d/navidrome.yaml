@@ -1,0 +1,73 @@
+version: "1.0"
+type: component
+data:
+  name: service.navidrome
+  type: formPage
+  config:
+    title: Navidrome
+    description: Manage the Navidrome music server
+    request:
+      service: navidrome
+      get:
+        method: get
+      post:
+        method: set
+    fields:
+      - type: checkbox
+        name: enable
+        label: Enable service
+      - type: textInput
+        name: listen_address
+        label: Listen address
+      - type: numberInput
+        name: port
+        label: Port
+        min: 1
+        max: 65535
+      - type: textInput
+        name: music_directory
+        label: Music library path
+        placeholder: /srv/dev-disk-by-label-media/music
+        hint: Required when enabling Navidrome.
+      - type: textInput
+        name: data_directory
+        label: Data directory
+        placeholder: /var/lib/navidrome
+        hint: Required when enabling Navidrome.
+      - type: select
+        name: log_level
+        label: Log level
+        store:
+          data:
+            - text: Info
+              value: info
+            - text: Debug
+              value: debug
+            - text: Warn
+              value: warn
+            - text: Error
+              value: error
+      - type: checkbox
+        name: auto_update
+        label: Auto-update Navidrome
+      - type: select
+        name: navidrome_version
+        label: Navidrome version
+        placeholder: latest
+        hint: Choose a packaged version; use omv-rpc if you need something else.
+        store:
+          data:
+            - text: Latest (tracks upstream)
+              value: latest
+            - text: Navidrome 0.58.5
+              value: "0.58.5"
+            - text: Navidrome 0.58.4
+              value: "0.58.4"
+            - text: Navidrome 0.58.3
+              value: "0.58.3"
+    buttons:
+      - template: submit
+      - template: cancel
+        execute:
+          type: url
+          url: /services

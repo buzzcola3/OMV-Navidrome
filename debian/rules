@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	# Nothing extra to clean beyond debhelper defaults
+	:
+
+override_dh_auto_configure:
+	# No autotools/configure step for this plugin
+	:
+
+override_dh_auto_build:
+	# Build is handled entirely by packaging; avoid recursive dpkg calls
+	:
+
+override_dh_auto_install:
+	# Files are laid out directly in debian/ directories
+	:

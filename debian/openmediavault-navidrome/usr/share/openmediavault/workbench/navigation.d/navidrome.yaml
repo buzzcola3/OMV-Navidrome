@@ -1,0 +1,9 @@
+version: "1.0"
+type: navigation-item
+data:
+  path: services.navidrome
+  text: Navidrome
+  icon: mdi:music
+  position: 90
+  url: /services/navidrome
+  role: admin

@@ -1,0 +1,50 @@
+#!/bin/sh
+set -e
+
+create_system_user() {
+    if ! getent passwd navidrome >/dev/null; then
+        adduser --system --group --home /var/lib/navidrome --shell /usr/sbin/nologin navidrome
+    fi
+}
+
+setup_directories() {
+    install -d -o navidrome -g navidrome -m 0755 /var/lib/navidrome
+    install -d -o navidrome -g navidrome -m 0755 /var/log/navidrome
+    install -d -m 0755 /etc/navidrome
+}
+
+seed_confdb() {
+    DEFAULT_CONFIG='{"enable":false,"listen_address":"0.0.0.0","port":4533,"music_directory":"","data_directory":"","log_level":"info","auto_update":true,"navidrome_version":"latest"}'
+    if ! omv-confdbadm read conf.service.navidrome >/dev/null 2>&1; then
+        printf '%s' "$DEFAULT_CONFIG" | omv-confdbadm update conf.service.navidrome - >/dev/null 2>&1 || true
+    fi
+}
+
+fetch_binary() {
+    if [ ! -x /usr/lib/navidrome/navidrome ]; then
+        /usr/lib/navidrome/fetch-navidrome.sh || true
+    fi
+}
+
+run_mkconf() {
+    if command -v omv-mkconf >/dev/null 2>&1; then
+        omv-mkconf navidrome >/dev/null 2>&1 || true
+    else
+        /usr/share/openmediavault/mkconf/navidrome >/dev/null 2>&1 || true
+    fi
+}
+
+case "$1" in
+    configure|abort-upgrade|abort-deconfigure)
+        create_system_user
+        setup_directories
+        fetch_binary
+        seed_confdb
+        run_mkconf
+        systemctl daemon-reload >/dev/null 2>&1 || true
+        ;;
+    *)
+        ;;
+esac
+
+exit 0

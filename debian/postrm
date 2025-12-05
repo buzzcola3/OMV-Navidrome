@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    purge)
+        deluser --system navidrome >/dev/null 2>&1 || true
+        delgroup navidrome >/dev/null 2>&1 || true
+        rm -rf /var/lib/navidrome /var/log/navidrome /etc/navidrome /usr/lib/navidrome
+        ;;
+esac
+
+exit 0

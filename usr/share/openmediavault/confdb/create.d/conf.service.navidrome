@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -e
+
+. /usr/share/openmediavault/scripts/helper-functions
+
+SERVICE_ID="conf.service.navidrome"
+
+DEFAULT_CONFIG='{"enable":false,"listen_address":"0.0.0.0","port":4533,"music_directory":"","data_directory":"","log_level":"info","auto_update":true,"navidrome_version":"latest"}'
+
+if ! omv-confdbadm read "${SERVICE_ID}" >/dev/null 2>&1; then
+    printf '%s' "$DEFAULT_CONFIG" | omv-confdbadm update "${SERVICE_ID}" - >/dev/null 2>&1 || true
+fi
+
+exit 0
